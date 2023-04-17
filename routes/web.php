@@ -9,4 +9,5 @@ Route::get('/', function () {
 Route::namespace('App\Http\Controllers')->prefix('admin')->group(function () {
     Route::get('/', 'Main\IndexController@index')->name('main.index');
     Route::resource('category', 'CategoryController');
+    Route::resource('tag', 'TagController');
 });

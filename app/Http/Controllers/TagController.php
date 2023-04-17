@@ -3,63 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Tag\StoreRequest;
+use App\Http\Requests\Tag\UpdateRequest;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
-        //
+        $tags = Tag::latest()->get();
+        return view('tag.index', compact('tags'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('tag.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
-        //
+        Tag::create($request->validated());
+        return to_route('tag.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tag $tag)
+    public function show(Tag $tag): View
     {
-        //
+        return view('tag.show', compact('tag'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tag $tag)
+    public function edit(Tag $tag): View
     {
-        //
+        return view('tag.edit', compact('tag'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tag $tag)
+    public function update(UpdateRequest $request, Tag $tag): RedirectResponse
     {
-        //
+        $tag->update($request->validated());
+        return to_route('tag.show', $tag->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tag $tag)
+    public function destroy(Tag $tag): RedirectResponse
     {
-        //
+        $tag->delete();
+        return to_route('tag.index');
     }
 }
