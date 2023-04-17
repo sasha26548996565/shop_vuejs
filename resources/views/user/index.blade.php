@@ -4,8 +4,8 @@
     <div class="card w-85 m-3">
         <div class="card-header">
             <h3 class="card-title">
-                <a href="{{ route('color.index') }}">Colors</a>
-                <a href="{{ route('color.create') }}" class="btn btn-primary">Create colors</a>
+                <a href="{{ route('user.index') }}">user</a>
+                <a href="{{ route('user.create') }}" class="btn btn-primary">Create users</a>
             </h3>
             <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -24,17 +24,27 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Title</th>
+                        <th>First Name</th>
+                        <th>Patronymic</th>
+                        <th>Last Name</th>
+                        <th>Address</th>
+                        <th>Gender</th>
+                        <th>Email</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($colors as $color)
+                    @foreach ($users as $user)
                         <tr>
-                            <td>{{ $color->id }}</td>
-                            <td><a href="{{ route('color.show', $color->id) }}">{{ $color->title }}</a></td>
+                            <td>{{ $user->id }}</td>
+                            <td><a href="{{ route('user.show', $user->id) }}">{{ $user->first_name }}</a></td>
+                            <td>{{ $user->patronymic }}</td>
+                            <td>{{ $user->last_name }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->genderTitle() }}</td>
+                            <td>{{ $user->email }}</td>
                             <td>
-                                <form action="{{ route('color.destroy', $color->id) }}" method="POST">
+                                <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <input type="submit" class="btn btn-outline-danger" value="Delete">
