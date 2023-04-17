@@ -4,8 +4,13 @@
     <div class="card w-85 m-3">
         <div class="card-header">
             <h3 class="card-title">
-                <a href="{{ route('tag.index') }}">Tags</a>
-                <a href="{{ route('tag.create') }}" class="btn btn-primary">Create tags</a>
+                <a href="{{ route('color.index') }}">Colors</a>
+                <a href="{{ route('color.edit', $color->id) }}" class="btn btn-primary">Edit color</a>
+                <form action="{{ route('color.destroy', $color->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" class="btn btn-outline-danger" value="Delete">
+                </form>
             </h3>
             <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -25,23 +30,13 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tags as $tag)
-                        <tr>
-                            <td>{{ $tag->id }}</td>
-                            <td><a href="{{ route('tag.show', $tag->id) }}">{{ $tag->title }}</a></td>
-                            <td>
-                                <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                    <tr>
+                        <td>{{ $color->id }}</td>
+                        <td>{{ $color->title }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
