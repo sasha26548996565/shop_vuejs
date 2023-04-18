@@ -12,4 +12,5 @@ Route::namespace('App\Http\Controllers')->prefix('admin')->group(function () {
     Route::resource('tag', 'TagController');
     Route::resource('user', 'UserController');
     Route::resource('color', 'ColorController');
+    Route::resource('product', 'ProductController');
 });
