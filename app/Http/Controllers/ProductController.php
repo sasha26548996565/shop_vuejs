@@ -30,10 +30,7 @@ class ProductController extends Controller
 
     public function create(): View
     {
-        $tags = Tag::all();
-        $categories = Category::all();
-        $colors = Color::all();
-        return view('product.create', compact('tags', 'colors', 'categories'));
+        return view('product.create');
     }
 
     public function store(StoreRequest $request): RedirectResponse
@@ -49,10 +46,7 @@ class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        $tags = Tag::all();
-        $categories = Category::all();
-        $colors = Color::all();
-        return view('product.edit', compact('tags', 'colors', 'categories', 'product'));
+        return view('product.edit', compact('product'));
     }
 
     public function update(UpdateRequest $request, Product $product): RedirectResponse
