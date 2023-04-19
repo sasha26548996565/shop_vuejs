@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title', 'description', 'preview_image', 'count', 'price', 'is_published', 'category_id', 'user_id'
@@ -30,5 +31,10 @@ class Product extends Model
     public function colors(): BelongsToMany
     {
         return $this->belongsToMany(Color::class, 'product_colors', 'product_id', 'color_id');
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted_at ? true : false;
     }
 }

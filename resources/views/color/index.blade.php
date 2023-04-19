@@ -34,11 +34,18 @@
                             <td>{{ $color->id }}</td>
                             <td><a href="{{ route('color.show', $color->id) }}">{{ $color->title }}</a></td>
                             <td>
-                                <form action="{{ route('color.destroy', $color->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
-                                </form>
+                                @if ($color->isDeleted())
+                                    <form action="{{ route('color.restore', $color->id) }}" method="POST">
+                                        @csrf
+                                        <input type="submit" class="btn btn-outline-primary" value="Restore">
+                                    </form>
+                                @else
+                                    <form action="{{ route('color.destroy', $color->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

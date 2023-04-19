@@ -55,11 +55,18 @@
                             @endforeach
                         </td>
                         <td>
-                            <form action="{{ route('product.destroy', $product->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" class="btn btn-outline-danger" value="Delete">
-                            </form>
+                            @if ($product->isDeleted())
+                                <form action="{{ route('product.restore', $product->id) }}" method="POST">
+                                    @csrf
+                                    <input type="submit" class="btn btn-outline-primary" value="Restore">
+                                </form>
+                            @else
+                                <form action="{{ route('product.destroy', $product->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

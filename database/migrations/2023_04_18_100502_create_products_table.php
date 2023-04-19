@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('count');
             $table->boolean('is_published')->default(false);
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

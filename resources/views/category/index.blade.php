@@ -25,7 +25,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Delete</th>
+                        <th>Delete/Restore</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,11 +34,18 @@
                             <td>{{ $category->id }}</td>
                             <td><a href="{{ route('category.show', $category->id) }}">{{ $category->title }}</a></td>
                             <td>
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
-                                </form>
+                                @if ($category->isDeleted())
+                                    <form action="{{ route('category.restore', $category->id) }}" method="POST">
+                                        @csrf
+                                        <input type="submit" class="btn btn-outline-primary" value="Restore">
+                                    </form>
+                                @else
+                                    <form action="{{ route('category.destroy', $category->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

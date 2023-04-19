@@ -14,7 +14,7 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $categories = Category::latest()->get();
+        $categories = Category::withTrashed()->latest()->get();
         return view('category.index', compact('categories'));
     }
 
@@ -29,18 +29,21 @@ class CategoryController extends Controller
         return to_route('category.index');
     }
 
-    public function show(Category $category): View
+    public function show(int $categoryId): View
     {
+        $category = Category::withTrashed()->findOrFail($categoryId);
         return view('category.show', compact('category'));
     }
 
-    public function edit(Category $category): View
+    public function edit($categoryId): View
     {
+        $category = Category::withTrashed()->findOrFail($categoryId);
         return view('category.edit', compact('category'));
     }
 
-    public function update(UpdateRequest $request, Category $category): RedirectResponse
+    public function update(UpdateRequest $request, int $categoryId): RedirectResponse
     {
+        $category = Category::withTrashed()->findOrFail($categoryId);
         $category->update($request->validated());
         return to_route('category.show', $category->id);
     }
@@ -49,5 +52,11 @@ class CategoryController extends Controller
     {
         $category->delete();
         return to_route('category.index');
+    }
+
+    public function restore(int $categoryId): RedirectResponse
+    {
+        Category::withTrashed()->findOrFail($categoryId)->restore($categoryId);
+        return to_route('category.show', $categoryId);
     }
 }

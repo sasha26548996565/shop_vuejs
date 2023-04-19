@@ -12,7 +12,7 @@ class TagController extends Controller
 {
     public function index(): View
     {
-        $tags = Tag::latest()->get();
+        $tags = Tag::withTrashed()->latest()->get();
         return view('tag.index', compact('tags'));
     }
 
@@ -27,18 +27,21 @@ class TagController extends Controller
         return to_route('tag.index');
     }
 
-    public function show(Tag $tag): View
+    public function show(int $tagId): View
     {
+        $tag = Tag::withTrashed()->findOrFail($tagId);
         return view('tag.show', compact('tag'));
     }
 
-    public function edit(Tag $tag): View
+    public function edit(int $tagId): View
     {
+        $tag = Tag::withTrashed()->findOrFail($tagId);
         return view('tag.edit', compact('tag'));
     }
 
-    public function update(UpdateRequest $request, Tag $tag): RedirectResponse
+    public function update(UpdateRequest $request, int $tagId): RedirectResponse
     {
+        $tag = Tag::withTrashed()->findOrFail($tagId);
         $tag->update($request->validated());
         return to_route('tag.show', $tag->id);
     }
@@ -47,5 +50,11 @@ class TagController extends Controller
     {
         $tag->delete();
         return to_route('tag.index');
+    }
+
+    public function restore(int $tagId): RedirectResponse
+    {
+        Tag::withTrashed()->findOrFail($tagId)->restore($tagId);
+        return to_route('tag.show', $tagId);
     }
 }

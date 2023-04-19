@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use App\Models\Color;
 use App\DTO\ProductDTO;
 use App\Models\Product;
-use App\Models\Category;
 use App\Services\ProductService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +21,7 @@ class ProductController extends Controller
 
     public function index(): View
     {
-        $products = Product::all();
+        $products = Product::withTrashed()->latest()->get();
         return view('product.index', compact('products'));
     }
 
@@ -39,18 +36,21 @@ class ProductController extends Controller
         return to_route('product.index');
     }
 
-    public function show(Product $product): View
+    public function show(int $productId): View
     {
+        $product = Product::withTrashed()->findOrFail($productId);
         return view('product.show', compact('product'));
     }
 
-    public function edit(Product $product): View
+    public function edit(int $productId): View
     {
+        $product = Product::withTrashed()->findOrFail($productId);
         return view('product.edit', compact('product'));
     }
 
-    public function update(UpdateRequest $request, Product $product): RedirectResponse
+    public function update(UpdateRequest $request, int $productId): RedirectResponse
     {
+        $product = Product::withTrashed()->findOrFail($productId);
         $this->productService->update(new ProductDTO($request->validated()), $product);
         return to_route('product.show', $product->id);
     }
@@ -59,5 +59,11 @@ class ProductController extends Controller
     {
         $product->delete();
         return to_route('product.index');
+    }
+
+    public function restore(int $productId): RedirectResponse
+    {
+        Product::withTrashed()->findOrFail($productId)->restore($productId);
+        return to_route('product.show', $productId);
     }
 }

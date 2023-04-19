@@ -14,7 +14,7 @@ class ColorController extends Controller
 {
     public function index(): View
     {
-        $colors = Color::latest()->get();
+        $colors = Color::withTrashed()->latest()->get();
         return view('color.index', compact('colors'));
     }
 
@@ -29,18 +29,21 @@ class ColorController extends Controller
         return to_route('color.index');
     }
 
-    public function show(Color $color): View
+    public function show(int $colorId): View
     {
+        $color = Color::withTrashed()->findOrFail($colorId);
         return view('color.show', compact('color'));
     }
 
-    public function edit(Color $color): View
+    public function edit(int $colorId): View
     {
+        $color = Color::withTrashed()->findOrFail($colorId);
         return view('color.edit', compact('color'));
     }
 
-    public function update(UpdateRequest $request, Color $color): RedirectResponse
+    public function update(UpdateRequest $request, int $colorId): RedirectResponse
     {
+        $color = Color::withTrashed()->findOrFail($colorId);
         $color->update($request->validated());
         return to_route('color.show', $color->id);
     }
@@ -49,5 +52,11 @@ class ColorController extends Controller
     {
         $color->delete();
         return to_route('color.index');
+    }
+
+    public function restore(int $colorId): RedirectResponse
+    {
+        Color::withTrashed()->findOrFail($colorId)->restore($colorId);
+        return to_route('color.show', $colorId);
     }
 }
