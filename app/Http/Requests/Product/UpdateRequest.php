@@ -19,7 +19,7 @@ class UpdateRequest extends FormRequest
             'price' => 'required|integer',
             'count' => 'required|integer',
             'preview_image' => 'nullable|file',
-            'is_published' => 'required',
+            'is_published' => 'nullable',
             'category_id' => 'required|integer|exists:categories,id',
             'tags' => 'required|array',
             'tags.*' => 'required|integer|exists:tags,id',

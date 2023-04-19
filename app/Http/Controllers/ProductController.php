@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\ProductDTO;
 use App\Models\Tag;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -33,17 +33,14 @@ class ProductController extends Controller
 
     public function store(StoreRequest $request): RedirectResponse
     {
-        $params = $request->validated();
+        $params = new ProductDTO($request->validated());
+        DB::beginTransaction();
         try
         {
-            DB::beginTransaction();
-            $params['preview_image'] = Storage::disk('public')->put('/products', $params['preview_image']);
-            $tags = $params['tags'];
-            $colors = $params['colors'];
-            unset($params['tags'], $params['colors']);
-            $product = Product::create($params);
-            $product->tags()->attach($tags);
-            $product->colors()->attach($colors);
+            $params->preview_image = Storage::disk('public')->put('/products', $params->preview_image);
+            $product = Product::create($params->except('tags')->except('colors')->toArray());
+            $product->tags()->attach($params->tags);
+            $product->colors()->attach($params->colors);
             DB::commit();
         } catch (\Exception $exception)
         {
@@ -69,25 +66,26 @@ class ProductController extends Controller
 
     public function update(UpdateRequest $request, Product $product): RedirectResponse
     {
-        $params = $request->validated();
+        $params = new ProductDTO($request->validated());
+        DB::beginTransaction();
         try
         {
-            DB::beginTransaction();
-            if (array_key_exists('preview_image', $params))
+            if ($params->preview_image != null)
             {
                 Storage::delete($product->preview_image);
-                $params['preview_image'] = Storage::disk('public')->put('/products', $params['preview_image']);
+                $params->preview_image = Storage::disk('public')->put('/products', $params->preview_image);
+            } else
+            {
+                $params->preview_image = $product->preview_image;
             }
-            $tags = $params['tags'];
-            $colors = $params['colors'];
-            unset($params['tags'], $params['colors']);
-            $product->update($params);
-            $product->tags()->sync($tags);
-            $product->colors()->sync($colors);
+            $product->update($params->except('colors')->except('tags')->toArray());
+            $product->tags()->sync($params->tags);
+            $product->colors()->sync($params->colors);
+
             DB::commit();
         } catch (\Exception $exception)
         {
-            DB::rollBack();
+            DB::rollback();
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
