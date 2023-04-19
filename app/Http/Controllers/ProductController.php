@@ -57,7 +57,7 @@ class ProductController extends Controller
 
     public function update(UpdateRequest $request, Product $product): RedirectResponse
     {
-        $this->productService->update(new ProductDTO($request->validated()), $product->id);
+        $this->productService->update(new ProductDTO($request->validated()), $product);
         return to_route('product.show', $product->id);
     }
 
