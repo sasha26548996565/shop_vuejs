@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Color;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Color\StoreRequest;
@@ -12,9 +13,16 @@ use App\Http\Requests\Color\UpdateRequest;
 
 class ColorController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $colors = Color::withTrashed()->latest()->get();
+        if ($request->search)
+        {
+            $colors = Color::search($request->search)->withTrashed()->get();
+        } else
+        {
+            $colors = Color::withTrashed()->latest()->get();
+        }
+
         return view('color.index', compact('colors'));
     }
 

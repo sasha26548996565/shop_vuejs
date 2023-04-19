@@ -7,12 +7,19 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Tag\StoreRequest;
 use App\Http\Requests\Tag\UpdateRequest;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $tags = Tag::withTrashed()->latest()->get();
+        if ($request->search)
+        {
+            $tags = Tag::search($request->search)->withTrashed()->get();
+        } else
+        {
+            $tags = Tag::withTrashed()->latest()->get();
+        }
         return view('tag.index', compact('tags'));
     }
 

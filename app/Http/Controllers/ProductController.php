@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DTO\ProductDTO;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Services\ProductService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -19,9 +20,15 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::withTrashed()->latest()->get();
+        if ($request->search)
+        {
+            $products = Product::search($request->search)->withTrashed()->get();
+        } else
+        {
+            $products = Product::withTrashed()->latest()->get();
+        }
         return view('product.index', compact('products'));
     }
 
