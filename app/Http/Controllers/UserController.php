@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\User\StoreRequest;
@@ -12,9 +13,15 @@ use App\Http\Requests\User\UpdateRequest;
 
 class UserController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $users = User::withTrashed()->latest()->get();
+        if ($request->search)
+        {
+            $users = User::search($request->search)->withTrashed()->get();
+        } else
+        {
+            $users = User::withTrashed()->latest()->get();
+        }
         return view('user.index', compact('users'));
     }
 

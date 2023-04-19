@@ -6,17 +6,20 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Laravel\Scout\Searchable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Laravel\Scout\Attributes\SearchUsingFullText;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Searchable;
 
     protected $fillable = [
         'first_name',
@@ -45,6 +48,18 @@ class User extends Authenticatable
         return [
             self::MALE => 'Male',
             self::FEMALE => 'Female'
+        ];
+    }
+
+    #[SearchUsingPrefix(['first_name', 'patronymic', 'last_name', 'address'])]
+    #[SearchUsingFullText(['first_name', 'patronymic', 'last_name', 'address'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'first_name' => $this->first_name,
+            'patronymic' => $this->patronymic,
+            'last_name' => $this->last_name,
+            'address' => $this->address
         ];
     }
 

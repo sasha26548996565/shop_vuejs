@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Category\StoreRequest;
@@ -12,9 +13,15 @@ use App\Http\Requests\Category\UpdateRequest;
 
 class CategoryController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $categories = Category::withTrashed()->latest()->get();
+        if ($request->search)
+        {
+            $categories = Category::search($request->search)->withTrashed()->get();
+        } else
+        {
+            $categories = Category::withTrashed()->latest()->get();
+        }
         return view('category.index', compact('categories'));
     }
 
