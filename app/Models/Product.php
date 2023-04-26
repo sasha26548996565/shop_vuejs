@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Attributes\SearchUsingFullText;
@@ -49,5 +50,10 @@ class Product extends Model
     public function isDeleted(): bool
     {
         return $this->deleted_at ? true : false;
+    }
+
+    public function getImageUrl(): string
+    {
+        return url(Storage::url($this->preview_image));
     }
 }
