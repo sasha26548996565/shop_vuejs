@@ -16,6 +16,7 @@ class ProductDTO extends DataTransferObject
     public string|UploadedFile|null $preview_image;
     public int $count;
     public int $price;
+    public ?int $new_price;
     public int $is_published = 0;
     public int $category_id;
     public array $tags;

@@ -19,6 +19,7 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Price</th>
+                        <th>new Price</th>
                         <th>Count</th>
                         <th>Category</th>
                         <th>Tags</th>
@@ -33,6 +34,7 @@
                             <td>{{ $product->id }}</td>
                             <td><a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</td>
                             <td>{{ $product->price }}</td>
+                            <td>{{ $product->new_price ?? '-' }}</td>
                             <td>{{ $product->count }}</td>
                             <td>{{ $product->category->title }}</td>
                             <td>

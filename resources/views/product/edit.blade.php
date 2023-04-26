@@ -25,6 +25,11 @@
                         value="{{ $product->price }}">
                 </div>
                 <div class="form-group">
+                    <label for="new_price">New Price with discount (if product have discount)</label>
+                    <input type="number" name="new_price" class="form-control" id="new_price" placeholder="Enter new price"
+                        value="{{ $product->new_price }}">
+                </div>
+                <div class="form-group">
                     <label for="count">Count</label>
                     <input type="number" name="count" class="form-control" id="count" placeholder="Enter count"
                         value="{{ $product->count }}">

@@ -28,6 +28,9 @@
                         <th>Preview Image</th>
                         <th>Description</th>
                         <th>Price</th>
+                        @if (isset($product->new_price))
+                            <th>{{ $product->new_price }}</th>
+                        @endif
                         <th>Count</th>
                         <th>Category</th>
                         <th>Tags</th>
@@ -42,6 +45,9 @@
                         <td><img src="{{ Storage::url($product->preview_image) }}" width="250" height="250" alt="{{ $product->title }}"></td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->price }}</td>
+                        @if (isset($product->new_price))
+                            <td>{{ $product->new_price }}</td>
+                        @endif
                         <td>{{ $product->count }}</td>
                         <td>{{ $product->category->title }}</td>
                         <td>
