@@ -41,6 +41,14 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="group_id">Group</label>
+                    <select name="group_id" class="form-control" id="group_id">
+                        @foreach ($groups as $group)
+                            <option @selected(old('group_id') == $group->id) value="{{ $group->id }}">{{ $group->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="tags">Tags</label>
                     <select class="select2 w-50" name="tags[]" id="tags" data-placeholder="Change tag"
                         multiple="multiple">

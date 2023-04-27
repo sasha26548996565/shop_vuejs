@@ -19,12 +19,18 @@ class Product extends Model
     use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
-        'title', 'description', 'preview_image', 'count', 'price', 'new_price', 'is_published', 'category_id', 'user_id'
+        'title', 'description', 'preview_image', 'count', 'price', 'new_price',
+        'is_published', 'category_id', 'user_id', 'group_id'
     ];
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
     public function tags(): BelongsToMany

@@ -33,6 +33,7 @@
                         @endif
                         <th>Count</th>
                         <th>Category</th>
+                        <th>Group</th>
                         <th>Tags</th>
                         <th>Colors</th>
                         <th>Delete</th>
@@ -50,6 +51,7 @@
                         @endif
                         <td>{{ $product->count }}</td>
                         <td>{{ $product->category->title }}</td>
+                        <td>{{ $product->group->title }}</td>
                         <td>
                             @foreach ($product->tags as $tag)
                                 <span>{{ $tag->title }}</span>

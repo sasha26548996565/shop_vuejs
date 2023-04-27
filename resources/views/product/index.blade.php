@@ -22,6 +22,7 @@
                         <th>new Price</th>
                         <th>Count</th>
                         <th>Category</th>
+                        <th>Group</th>
                         <th>Tags</th>
                         <th>Colors</th>
                         <th>Published</th>
@@ -37,6 +38,7 @@
                             <td>{{ $product->new_price ?? '-' }}</td>
                             <td>{{ $product->count }}</td>
                             <td>{{ $product->category->title }}</td>
+                            <td>{{ $product->group->title }}</td>
                             <td>
                                 @foreach ($product->tags as $tag)
                                     <span>{{ $tag->title }}</span>
