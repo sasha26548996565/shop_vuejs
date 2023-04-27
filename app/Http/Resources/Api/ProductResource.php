@@ -17,6 +17,7 @@ class ProductResource extends JsonResource
             'preview_image' => $this->getImageUrl(),
             'price' => $this->price,
             'new_price' => $this->new_price,
+            'count' => $this->count,
             'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category)
         ];
