@@ -46,7 +46,7 @@ class Product extends Model
 
     public function images(): HasMany
     {
-        return $this->hasmany(ProductImage::class, 'product_Id', 'id');
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 
     #[SearchUsingPrefix(['title', 'description'])]

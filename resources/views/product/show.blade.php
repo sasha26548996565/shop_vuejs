@@ -26,6 +26,7 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Preview Image</th>
+                        <th>Images</th>
                         <th>Description</th>
                         <th>Price</th>
                         @if (isset($product->new_price))
@@ -44,6 +45,11 @@
                         <td>{{ $product->id }}</td>
                         <td><a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</td>
                         <td><img src="{{ Storage::url($product->preview_image) }}" width="250" height="250" alt="{{ $product->title }}"></td>
+                        <td>
+                            @foreach ($product->images as $image)
+                                <img src="{{ Storage::url($image->image) }}" width="250" height="250" alt="{{ $product->title }}"><br>
+                            @endforeach
+                        </td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->price }}</td>
                         @if (isset($product->new_price))

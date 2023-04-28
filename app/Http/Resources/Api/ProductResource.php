@@ -4,7 +4,6 @@ namespace App\Http\Resources\Api;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Resources\Api\CategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -22,7 +21,8 @@ class ProductResource extends JsonResource
             'count' => $this->count,
             'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category),
-            'group_products' => MinProductResource::collection($products)
+            'product_images' => ProductImagesResource::collection($this->images),
+            'group_products' => MinProductResource::collection($products),
         ];
     }
 }
