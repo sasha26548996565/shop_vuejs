@@ -35,9 +35,9 @@ class ProductService
 
     public function update(ProductDTO $params, Product $product): void
     {
-        // DB::beginTransaction();
-        // try
-        // {
+        DB::beginTransaction();
+        try
+        {
             if ($params->preview_image != null)
             {
                 $params->preview_image = $this->updateImage($product->preview_image, $params->preview_image);
@@ -52,12 +52,12 @@ class ProductService
             {
                 $this->updateImages($product->images, $params->images, $product->id);
             }
-        //     DB::commit();
-        // } catch (\Exception $exception)
-        // {
-        //     DB::rollback();
-        //     abort(Response::HTTP_INTERNAL_SERVER_ERROR);
-        // }
+            DB::commit();
+        } catch (\Exception $exception)
+        {
+            DB::rollback();
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private function setImages(array $images, int $productId): void
