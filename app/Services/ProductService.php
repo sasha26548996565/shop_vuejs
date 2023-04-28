@@ -6,15 +6,19 @@ namespace App\Services;
 
 use App\DTO\ProductDTO;
 use App\Models\Product;
-use App\Models\ProductImage;
 use Illuminate\Http\Response;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
+    private ProductImagesService $productImagesService;
+
+    public function __construct(ProductImagesService $productImagesService)
+    {
+        $this->productImagesService = $productImagesService;
+    }
+
     public function store(ProductDTO $params): void
     {
         DB::beginTransaction();
@@ -24,7 +28,7 @@ class ProductService
             $product = Product::create($params->except('tags')->except('colors')->except('images')->toArray());
             $product->tags()->attach($params->tags);
             $product->colors()->attach($params->colors);
-            $this->setImages($params->images, $product->id);
+            $this->productImagesService->setImages($params->images, $product->id);
             DB::commit();
         } catch (\Exception $exception)
         {
@@ -40,7 +44,7 @@ class ProductService
         {
             if ($params->preview_image != null)
             {
-                $params->preview_image = $this->updateImage($product->preview_image, $params->preview_image);
+                $params->preview_image = $this->productImagesService->updateImage($product->preview_image, $params->preview_image);
             } else
             {
                 $params->preview_image = $product->preview_image;
@@ -50,7 +54,7 @@ class ProductService
             $product->colors()->sync($params->colors);
             if ($params->images != null)
             {
-                $this->updateImages($product->images, $params->images, $product->id);
+                $this->productImagesService->updateImages($product->images, $params->images, $product->id);
             }
             DB::commit();
         } catch (\Exception $exception)
@@ -58,31 +62,5 @@ class ProductService
             DB::rollback();
             abort(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-    }
-
-    private function setImages(array $images, int $productId): void
-    {
-        foreach ($images as $image)
-        {
-            $pathImage = Storage::disk('public')->put('/products/images', $image);
-            ProductImage::create(['product_id' => $productId, 'image' => $pathImage]);
-        }
-    }
-
-    private function updateImages(Collection $oldImages, array $newImages, int $productId): void
-    {
-        foreach ($newImages as $index => $newImage)
-        {
-            $pathImage = Storage::disk('public')->put('/products/images', $newImage);
-            ProductImage::updateOrCreate([
-                'image' => $oldImages[$index]->image
-            ], ['image' => $pathImage, 'product_id' => $productId]);
-        }
-    }
-
-    private function updateImage(string $oldPreviewImage, UploadedFile $newPreviewImage): string
-    {
-        Storage::disk('public')->delete($oldPreviewImage);
-        return Storage::disk('public')->put('/products', $newPreviewImage);
     }
 }
