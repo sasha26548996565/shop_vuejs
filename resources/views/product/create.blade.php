@@ -69,10 +69,46 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="preview_image">File input</label>
+                    <label for="preview_image">Preview</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" name="preview_image" class="custom-file-input" id="preview_image">
+                            <label class="custom-file-label" for="preview_image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="images[]" class="custom-file-input" id="images">
+                            <label class="custom-file-label" for="preview_image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="images[]" class="custom-file-input" id="images">
+                            <label class="custom-file-label" for="preview_image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="images[]" class="custom-file-input" id="images">
                             <label class="custom-file-label" for="preview_image">Choose file</label>
                         </div>
                         <div class="input-group-append">

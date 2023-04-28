@@ -13,6 +13,7 @@ use Laravel\Scout\Attributes\SearchUsingFullText;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -41,6 +42,11 @@ class Product extends Model
     public function colors(): BelongsToMany
     {
         return $this->belongsToMany(Color::class, 'product_colors', 'product_id', 'color_id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasmany(ProductImage::class, 'product_Id', 'id');
     }
 
     #[SearchUsingPrefix(['title', 'description'])]

@@ -2,16 +2,13 @@
 
 namespace App\Http\Resources\Api;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Http\Resources\Api\CategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class IndexProductResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $products = Product::where('group_id', $this->group_id)->latest()->get();
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -22,7 +19,6 @@ class ProductResource extends JsonResource
             'count' => $this->count,
             'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category),
-            'group_products' => MinProductResource::collection($products)
         ];
     }
 }

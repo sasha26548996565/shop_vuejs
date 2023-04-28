@@ -91,6 +91,21 @@
                         </div>
                     </div>
                 </div>
+                @foreach ($product->images as $image)
+                    <div class="form-group">
+                        <label for="images">Image</label>
+                        <div class="w-50"><img src="{{ Storage::url($image->image) }}" alt="{{ $product->title }}" class="w-50"></div>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="images[]" class="custom-file-input" id="images">
+                                <label class="custom-file-label" for="preview_image">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
                 <div class="form-check">
                     <input type="checkbox" name="is_published" @checked($product->is_published) value="1" class="form-check-input" id="isPublished">
                     <label class="form-check-label" for="isPublished">Is published</label>
