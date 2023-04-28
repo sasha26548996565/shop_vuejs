@@ -25,9 +25,9 @@
                         value="{{ $product->price }}">
                 </div>
                 <div class="form-group">
-                    <label for="new_price">New Price with discount (if product have discount)</label>
-                    <input type="number" name="new_price" class="form-control" id="new_price" placeholder="Enter new price"
-                        value="{{ $product->new_price }}">
+                    <label for="old_price">old Price with discount (if product have discount)</label>
+                    <input type="number" name="old_price" class="form-control" id="old_price" placeholder="Enter new price"
+                        value="{{ $product->old_price }}">
                 </div>
                 <div class="form-group">
                     <label for="count">Count</label>

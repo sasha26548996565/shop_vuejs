@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('description')->fulltext();
             $table->string('preview_image');
             $table->unsignedBigInteger('price');
-            $table->unsignedBigInteger('new_price')->nullable();
+            $table->unsignedBigInteger('old_price')->nullable();
             $table->unsignedInteger('count');
             $table->boolean('is_published')->default(false);
             $table->foreignIdFor(Group::class)->constrained()->cascadeOnDelete();
