@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Filters;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductFilter extends AbstractFilter
@@ -52,5 +53,12 @@ class ProductFilter extends AbstractFilter
     public function categories(Builder $builder, $value): void
     {
         $builder->whereIn('category_id', $value);
+    }
+
+    public function sort(Builder $builder, $value): void
+    {
+        $sort = explode('|', $value);
+        $builder->orderBy(in_array($sort[0], Product::ALLOWED_SORT) ? $sort[0] : 'title',
+            in_array($sort[1], ['asc', 'desc']) ? $sort[1] : 'asc');
     }
 }

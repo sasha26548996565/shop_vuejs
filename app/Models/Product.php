@@ -26,6 +26,8 @@ class Product extends Model
         'is_published', 'category_id', 'user_id', 'group_id'
     ];
 
+    public const ALLOWED_SORT = ['title', 'price'];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
