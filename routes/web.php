@@ -18,4 +18,6 @@ Route::namespace('App\Http\Controllers')->prefix('admin')->group(function () {
     Route::post('/color/restore/{color}', 'ColorController@restore')->name('color.restore');
     Route::resource('product', 'ProductController');
     Route::post('/product/restore/{product}', 'ProductController@restore')->name('product.restore');
+    Route::resource('group', 'GroupController');
+    Route::post('/group/restore/{group}', 'GroupController@restore')->name('group.restore');
 });

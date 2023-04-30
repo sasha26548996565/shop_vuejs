@@ -1,10 +1,11 @@
 <?php
 
-use App\Models\Category;
 use App\Models\Color;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Group;
+use App\Models\Category;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -16,8 +17,10 @@ return new class extends Migration
             $table->string('description')->fulltext();
             $table->string('preview_image');
             $table->unsignedBigInteger('price');
+            $table->unsignedBigInteger('old_price')->nullable();
             $table->unsignedInteger('count');
             $table->boolean('is_published')->default(false);
+            $table->foreignIdFor(Group::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();

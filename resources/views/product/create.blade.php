@@ -23,6 +23,11 @@
                         value="{{ old('price') }}">
                 </div>
                 <div class="form-group">
+                    <label for="old_price">Old Price with discount (if product have discount)</label>
+                    <input type="number" name="old_price" class="form-control" id="old_price" placeholder="Enter new price"
+                        value="{{ old('old_price') }}">
+                </div>
+                <div class="form-group">
                     <label for="count">Count</label>
                     <input type="number" name="count" class="form-control" id="count" placeholder="Enter count"
                         value="{{ old('count') }}">
@@ -32,6 +37,14 @@
                     <select name="category_id" class="form-control" id="category_id">
                         @foreach ($categories as $category)
                             <option @selected(old('category_id') == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="group_id">Group</label>
+                    <select name="group_id" class="form-control" id="group_id">
+                        @foreach ($groups as $group)
+                            <option @selected(old('group_id') == $group->id) value="{{ $group->id }}">{{ $group->title }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -56,10 +69,46 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="preview_image">File input</label>
+                    <label for="preview_image">Preview</label>
                     <div class="input-group">
                         <div class="custom-file">
                             <input type="file" name="preview_image" class="custom-file-input" id="preview_image">
+                            <label class="custom-file-label" for="preview_image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="images[]" class="custom-file-input" id="images">
+                            <label class="custom-file-label" for="preview_image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="images[]" class="custom-file-input" id="images">
+                            <label class="custom-file-label" for="preview_image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="images">Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="images[]" class="custom-file-input" id="images">
                             <label class="custom-file-label" for="preview_image">Choose file</label>
                         </div>
                         <div class="input-group-append">

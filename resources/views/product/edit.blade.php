@@ -25,6 +25,11 @@
                         value="{{ $product->price }}">
                 </div>
                 <div class="form-group">
+                    <label for="old_price">old Price with discount (if product have discount)</label>
+                    <input type="number" name="old_price" class="form-control" id="old_price" placeholder="Enter new price"
+                        value="{{ $product->old_price }}">
+                </div>
+                <div class="form-group">
                     <label for="count">Count</label>
                     <input type="number" name="count" class="form-control" id="count" placeholder="Enter count"
                         value="{{ $product->count }}">
@@ -35,6 +40,15 @@
                         @foreach ($categories as $category)
                             <option @selected(($category->id == $product->category->id) || (old('category_id') == $category->id))
                                 value="{{ $category->id }}">{{ $category->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="group_id">Group</label>
+                    <select name="group_id" class="form-control" id="group_id">
+                        @foreach ($groups as $group)
+                            <option @selected(($group->id == $product->group->id) || (old('group_id') == $group->id))
+                                value="{{ $group->id }}">{{ $group->title }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -77,6 +91,21 @@
                         </div>
                     </div>
                 </div>
+                @foreach ($product->images as $image)
+                    <div class="form-group">
+                        <label for="images">Image</label>
+                        <div class="w-50"><img src="{{ Storage::url($image->image) }}" alt="{{ $product->title }}" class="w-50"></div>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="images[]" class="custom-file-input" id="images">
+                                <label class="custom-file-label" for="preview_image">Choose file</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
                 <div class="form-check">
                     <input type="checkbox" name="is_published" @checked($product->is_published) value="1" class="form-check-input" id="isPublished">
                     <label class="form-check-label" for="isPublished">Is published</label>

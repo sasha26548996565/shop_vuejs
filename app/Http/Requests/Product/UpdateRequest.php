@@ -17,14 +17,17 @@ class UpdateRequest extends FormRequest
             'title' => 'required|string',
             'description' => 'required|string',
             'price' => 'required|integer',
+            'old_price' => 'nullable|integer',
             'count' => 'required|integer',
             'preview_image' => 'nullable|file',
             'is_published' => 'nullable',
             'category_id' => 'required|integer|exists:categories,id',
+            'group_id' => 'required|integer|exists:groups,id',
             'tags' => 'required|array',
             'tags.*' => 'required|integer|exists:tags,id',
             'colors' => 'required|array',
             'colors.*' => 'required|integer|exists:colors,id',
+            'images' => 'nullable|array|min:1'
         ];
     }
 }
