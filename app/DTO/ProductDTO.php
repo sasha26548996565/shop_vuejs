@@ -22,5 +22,6 @@ class ProductDTO extends DataTransferObject
     public int $group_id;
     public array $tags;
     public array $colors;
+    public array $sizes;
     public ?array $images;
 }

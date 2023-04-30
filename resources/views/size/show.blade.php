@@ -4,15 +4,15 @@
     <div class="card w-85 m-3">
         <div class="card-header">
             <h3 class="card-title">
-                <a href="{{ route('tag.index') }}">Tags</a>
-                <a href="{{ route('tag.edit', $tag->id) }}" class="btn btn-primary">Edit tag</a>
-                @if ($tag->isDeleted())
-                    <form action="{{ route('tag.restore', $tag->id) }}" method="POST">
+                <a href="{{ route('size.index') }}">Sizes</a>
+                <a href="{{ route('size.edit', $size->id) }}" class="btn btn-primary">Edit size</a>
+                @if ($size->isDeleted())
+                    <form action="{{ route('size.restore', $size->id) }}" method="POST">
                         @csrf
                         <input type="submit" class="btn btn-outline-primary" value="Restore">
                     </form>
                 @else
-                    <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
+                    <form action="{{ route('size.destroy', $size->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <input type="submit" class="btn btn-outline-danger" value="Delete">
@@ -41,8 +41,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{ $tag->id }}</td>
-                        <td>{{ $tag->title }}</td>
+                        <td>{{ $size->id }}</td>
+                        <td>{{ $size->title }}</td>
                     </tr>
                 </tbody>
             </table>
