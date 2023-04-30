@@ -19,7 +19,8 @@ class FilterRequest extends FormRequest
             'colors' => 'nullable|array',
             'priceFrom' => 'nullable|integer',
             'priceTo' => 'nullable|integer',
-            'sort' => 'nullable|string'
+            'sort' => 'nullable|string',
+            'page' => 'required|integer',
         ];
     }
 }

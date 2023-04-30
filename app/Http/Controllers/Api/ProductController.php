@@ -16,8 +16,10 @@ class ProductController extends Controller
 {
     public function index(FilterRequest $request): AnonymousResourceCollection
     {
-        $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($request->validated())]);
-        return IndexProductResource::collection(Product::filter($filter)->latest()->get());
+        $params = $request->validated();
+        $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($params)]);
+        $products = Product::filter($filter)->latest()->paginate(2, ['*'], 'page', $params['page']);
+        return IndexProductResource::collection($products);
     }
 
     public function show(Product $product): ProductResource
