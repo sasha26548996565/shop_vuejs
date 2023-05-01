@@ -228,48 +228,12 @@
                     <h6 class="text-uppercase">Your Cart (03)</h6> <span class="cart-close text-uppercase">X</span>
                 </div>
                 <div class="cart_items">
-                    <div class="items d-flex justify-content-between align-items-center">
+                    <div v-for="cartItem in cart" :key="cartItem.id" class="items d-flex justify-content-between align-items-center">
                         <div class="left d-flex align-items-center"> <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center"> <img src="assets/images/shop/products-img1.jpg" alt=""> </a>
                             <div class="text"> <a href="shop-details-1.html">
-                                    <h6>Diamond Bracelet</h6>
+                                    <h6>{{ cartItem.id }}</h6>
                                 </a>
-                                <p>2 X <span>$350.00</span> </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                        </div>
-                    </div>
-                    <div class="items d-flex justify-content-between align-items-center">
-                        <div class="left d-flex align-items-center"> <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center"> <img src="assets/images/shop/products-img2.jpg" alt=""> </a>
-                            <div class="text"> <a href="shop-details-1.html">
-                                    <h6>Blacked Neckles </h6>
-                                </a>
-                                <p>1 X <span>$150.00</span> </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                        </div>
-                    </div>
-                    <div class="items d-flex justify-content-between align-items-center">
-                        <div class="left d-flex align-items-center"> <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center"> <img src="assets/images/shop/products-img3.jpg" alt=""> </a>
-                            <div class="text"> <a href="shop-details-1.html">
-                                    <h6>Diamond Ring </h6>
-                                </a>
-                                <p>1 X <span>$200.00</span> </p>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div class="item-remove"> <i class="flaticon-cross"></i> </div>
-                        </div>
-                    </div>
-                    <div class="items d-flex justify-content-between align-items-center">
-                        <div class="left d-flex align-items-center"> <a href="shop-details-2.html" class="thumb d-flex justify-content-between align-items-center"> <img src="assets/images/shop/products-img4.jpg" alt=""> </a>
-                            <div class="text"> <a href="shop-details-1.html">
-                                    <h6>Women Earring</h6>
-                                </a>
-                                <p>1 X <span>$150.00</span> </p>
+                                <p>{{ cartItem.quantity }} X <span>$ {{ cartItem.product.price }}</span> </p>
                             </div>
                         </div>
                         <div class="right">
@@ -283,8 +247,9 @@
                     <h6 class="text-uppercase">Total:</h6>
                     <h6 class="ammount text-uppercase">$850.00</h6>
                 </div>
-                <div class="button-box d-flex justify-content-between"> <a href="cart.html" class="btn_black"> View Cart
-                    </a> <a href="cart.html" class="button-2 btn_theme"> Chekout </a> </div>
+                <div class="button-box d-flex justify-content-between"> <router-link :to="{name: 'cart.index'}"
+                    v-if="cart != null" class="btn_black"> View Cart
+                    </router-link> <a href="cart.html" class="button-2 btn_theme"> Chekout </a> </div>
             </div>
         </div>
         <div class="sidebar-content-closer"></div>
@@ -569,8 +534,23 @@
 <script>
 export default {
   name: "App",
+  data() {
+    return {
+        cart: null
+    }
+  },
   mounted() {
     jQuery(document).trigger('changed');
+    this.getCart();
+  },
+  methods: {
+    getCart() {
+        let cart = localStorage.getItem('cart');
+        if (cart != null)
+        {
+            this.cart = JSON.parse(cart);
+        }
+    }
   }
 };
 </script>

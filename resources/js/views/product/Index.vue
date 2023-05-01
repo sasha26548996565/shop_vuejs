@@ -308,7 +308,7 @@
                               <div class="products-grid-one__badge-box">
                                 <span class="bg_base badge new">New</span>
                               </div>
-                              <a @click.prevent="addCart(product.id, true)" href="#"
+                              <a @click.prevent="addCart(product, true)" href="#"
                                 class="addcart btn--primary style2"
                               >
                                 Add To Cart
@@ -459,7 +459,7 @@
                                               <i class="flaticon-plus"></i>
                                             </span>
                                           </div>
-                                          <button @click.prevent="addCart(product.id, false)" class="btn--primary">
+                                          <button @click.prevent="addCart(product, false)" class="btn--primary">
                                             Add to Cart
                                           </button>
                                         </div>
@@ -578,11 +578,11 @@ export default {
     };
   },
   methods: {
-    addCart(productId, isSingle) {
+    addCart(product, isSingle) {
       let
         cart = localStorage.getItem('cart'),
         quantity = isSingle ? 1 : jQuery('.qtyValue').val(),
-        newProduct = [{'id': productId, 'quantity': quantity}];
+        newProduct = [{'id': product.id, 'product': product, 'quantity': quantity}];
 
       jQuery('.qtyValue').val(1);
 
@@ -593,7 +593,7 @@ export default {
       {
         cart = JSON.parse(cart);
         cart.forEach(item => {
-          if (item.id == productId)
+          if (item.id == product.id)
           {
             item.quantity += Number(quantity);
             newProduct = null;
@@ -665,6 +665,6 @@ export default {
       this.priceTo = prices[1];
       this.getProducts();
     }
-  },
+  }
 };
 </script>
