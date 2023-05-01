@@ -59,6 +59,16 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="tags">Sizes</label>
+                    <select class="select2 w-50" name="sizes[]" id="sizes" data-placeholder="Change size"
+                        multiple="multiple">
+                        @foreach ($sizes as $size)
+                            <option @selected(is_array(old('sizes')) && in_array($size->id, old('sizes')))
+                                value="{{ $size->id }}">{{ $size->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="tags">colors</label>
                     <select class="select2 w-50" name="colors[]" id="colors" data-placeholder="Choose color"
                         multiple="multiple">

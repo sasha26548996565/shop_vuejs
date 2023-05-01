@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::namespace('App\Http\Controllers')->prefix('admin')->group(function () {
     Route::get('/', 'Main\IndexController@index')->name('main.index');
     Route::resource('category', 'CategoryController');
@@ -20,4 +16,11 @@ Route::namespace('App\Http\Controllers')->prefix('admin')->group(function () {
     Route::post('/product/restore/{product}', 'ProductController@restore')->name('product.restore');
     Route::resource('group', 'GroupController');
     Route::post('/group/restore/{group}', 'GroupController@restore')->name('group.restore');
+    Route::resource('size', 'SizeController');
+    Route::post('/size/restore/{group}', 'SizeController@restore')->name('size.restore');
 });
+
+Route::get('/{vueRoutes}', 'App\Http\Controllers\Client\IndexController@index')
+    ->where('vueRoutes', ['*']);
+Route::get('/{vueRoutes}', 'App\Http\Controllers\Client\IndexController@index')
+    ->whereIn('vueRoutes', ['', 'products', 'products\/[0-9]+']);

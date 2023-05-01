@@ -27,6 +27,8 @@ class UpdateRequest extends FormRequest
             'tags.*' => 'required|integer|exists:tags,id',
             'colors' => 'required|array',
             'colors.*' => 'required|integer|exists:colors,id',
+            'sizes' => 'required|array',
+            'sizes.*' => 'required|integer|exists:sizes,id',
             'images' => 'nullable|array|min:1'
         ];
     }

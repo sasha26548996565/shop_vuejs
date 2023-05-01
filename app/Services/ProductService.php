@@ -25,9 +25,10 @@ class ProductService
         try
         {
             $params->preview_image = Storage::disk('public')->put('/products', $params->preview_image);
-            $product = Product::create($params->except('tags')->except('colors')->except('images')->toArray());
+            $product = Product::create($params->except('tags')->except('colors')->except('images')->except('sizes')->toArray());
             $product->tags()->attach($params->tags);
             $product->colors()->attach($params->colors);
+            $product->sizes()->attach($params->sizes);
             $this->productImagesService->setImages($params->images, $product->id);
             DB::commit();
         } catch (\Exception $exception)
@@ -49,9 +50,10 @@ class ProductService
             {
                 $params->preview_image = $product->preview_image;
             }
-            $product->update($params->except('colors')->except('tags')->except('images')->toArray());
+            $product->update($params->except('colors')->except('tags')->except('images')->except('sizes')->toArray());
             $product->tags()->sync($params->tags);
             $product->colors()->sync($params->colors);
+            $product->sizes()->sync($params->sizes);
             if ($params->images != null)
             {
                 $this->productImagesService->updateImages($product->images, $params->images, $product->id);

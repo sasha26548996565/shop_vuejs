@@ -21,6 +21,7 @@ class MinProductResource extends JsonResource
             'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category),
             'colors' => ColorResource::collection($this->colors),
+            'sizes' => SizeResource::collection($this->sizes)
         ];
     }
 }

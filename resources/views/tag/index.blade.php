@@ -27,11 +27,18 @@
                             <td>{{ $tag->id }}</td>
                             <td><a href="{{ route('tag.show', $tag->id) }}">{{ $tag->title }}</a></td>
                             <td>
-                                <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" class="btn btn-outline-danger" value="Delete">
-                                </form>
+                                @if ($tag->isDeleted())
+                                    <form action="{{ route('tag.restore', $tag->id) }}" method="POST">
+                                        @csrf
+                                        <input type="submit" class="btn btn-outline-primary" value="Restore">
+                                    </form>
+                                @else
+                                    <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

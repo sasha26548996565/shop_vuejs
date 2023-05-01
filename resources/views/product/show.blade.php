@@ -36,6 +36,7 @@
                         <th>Category</th>
                         <th>Group</th>
                         <th>Tags</th>
+                        <th>Sizes</th>
                         <th>Colors</th>
                         <th>Delete</th>
                     </tr>
@@ -61,6 +62,11 @@
                         <td>
                             @foreach ($product->tags as $tag)
                                 <span>{{ $tag->title }}</span>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($product->sizes as $size)
+                                <span>{{ $size->title }}</span>
                             @endforeach
                         </td>
                         <td>
